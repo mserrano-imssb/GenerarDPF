@@ -1,4 +1,4 @@
-﻿@model VentasPDF.Models.DetallesVenta
+﻿@model VentasPDF.Models.Venta
 @{
     ViewData["Title"] = "Venta";
     Layout = null;
@@ -92,12 +92,12 @@
         <table style="width:100%">
             <tr>
                 <td>
-                    <img src="~/images/Tecnologers.png" style="width: 250px;" />
+                    <img src="~/images/Tecnologers.png" style="width: 100px; height: 100px; border-radius: 50%;" />
                 </td>
                 <td style="text-align:right">
                     <table style="margin-right:0;margin-left:auto">
                         <tr><td><p class="title2">NÚMERO VENTA</p></td></tr>
-                        <tr><td>@Model.IdDetalleVenta</td></tr>
+                        <tr><td>@Model.IdVenta</td></tr>
                     </table>
                 </td>
             </tr>
@@ -128,7 +128,7 @@
                             <td><p class="title">CLIENTE</p></td>
                         </tr>
                         <tr>
-                            <td><p class="text">@Model.IdVentaNavigation!.Cliente</p></td>
+                            <td><p class="text">@Model.Cliente</p></td>
                         </tr>                       
                     </table>
                 </td>
@@ -148,13 +148,13 @@
             </thead>
             <tbody>
                 @{
-                    foreach (var item in Model.IdVentaNavigation.DetallesVenta)
+                    foreach (var item in Model.DetallesVenta)
                     {
                         <tr>
                             <td class="td-item"><p class="item">@item.IdProductoNavigation!.Nombre</p></td>
                             <td class="td-item"><p class="item">@item.Cantidad</p></td>
                             <td class="td-item"><p class="item">L. @item.IdProductoNavigation.Precio</p></td>
-                            <td style="background-color:#EDF6F9"><p class="item">L. @item.Total</p></td>
+                            <td style="background-color:#EDF6F9"><p class="item">L. @item.TotalProducto</p></td>
                         </tr>
 
                     }
@@ -166,7 +166,7 @@
                         <p class="item-2">Sub Total</p>
                     </td>
                     <td class="item-3">
-                        <p>L. @Model.Total</p>
+                        <p>L. @Model.DetallesVenta!.FirstOrDefault()!.SubTotal</p>
                     </td>
                 </tr>
                 <tr>
@@ -174,7 +174,7 @@
                         <p class="item-2">ISV</p>
                     </td>
                     <td class="item-3">
-                        <p>L. @Model.Impuesto.ToString("F2")</p>
+                        <p>L. @Model.DetallesVenta!.FirstOrDefault()!.Impuesto.ToString("F2")</p>
                     </td>
                 </tr>
                 <tr>
@@ -182,7 +182,7 @@
                         <p>Total</p>
                     </td>
                     <td class="item-3">
-                        <p>L. @Model.TotalPagar.ToString("F2")</p>
+                        <p>L. @Model.DetallesVenta!.FirstOrDefault()!.Total.ToString("F2")</p>
                     </td>
                 </tr>
             </tbody>

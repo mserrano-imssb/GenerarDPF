@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VentasPDF.Models;
 
@@ -19,11 +17,15 @@ public partial class DetallesVenta
     public virtual Venta? IdVentaNavigation { get; set; }
 
     [DisplayFormat(DataFormatString = "{0:C2}")]
-    public decimal Total => IdProductoNavigation == null ? 0 : (decimal)Cantidad! * IdProductoNavigation.Precio;
-
-    public decimal Impuesto => IdProductoNavigation == null ? 0 : Total! * (decimal)0.15;
+    public decimal TotalProducto => IdProductoNavigation == null ? 0 : (decimal)Cantidad! * IdProductoNavigation.Precio;
 
     [DisplayFormat(DataFormatString = "{0:C2}")]
-    public decimal TotalPagar => IdProductoNavigation == null ? 0 : Total! + Impuesto;
+    public decimal SubTotal => IdVentaNavigation!.DetallesVenta.Sum(d => d.TotalProducto);
+
+    public decimal Impuesto => IdProductoNavigation == null ? 0 : SubTotal! * (decimal)0.15;
+
+    [DisplayFormat(DataFormatString = "{0:C2}")]
+    public decimal Total => IdProductoNavigation == null ? 0 : SubTotal! + Impuesto;
+
 
 }

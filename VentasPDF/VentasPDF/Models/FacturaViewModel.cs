@@ -1,15 +1,12 @@
-﻿namespace VentasPDF.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+
+namespace VentasPDF.Models
 {
-    public class FacturaViewModel
+    public class FacturaViewModel : DetallesVenta
     {
-        Categoria Categoria { get; set; } = null!;
 
-        Producto Producto { get; set; } = null!;
-
-        Venta Venta { get; set; } = null!;
-
-        DetallesVenta DetallesVenta { get; set; } = null!;
-
+       
 
     }
 }

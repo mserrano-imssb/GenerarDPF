@@ -1,4 +1,4 @@
-﻿@model IEnumerable<VentasPDF.Models.DetallesVenta>
+﻿@model IEnumerable<VentasPDF.Models.Venta>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,11 +13,9 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Cantidad</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Total</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Estado</th>                        
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -25,14 +23,12 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <th scope="row">@item.IdDetalleVenta</th>
-                            <td>@Html.DisplayFor(modelItem => item.IdProductoNavigation!.Descripcion)</td>
-                            <td>@Html.DisplayFor(modelItem => item.IdVentaNavigation!.Cliente)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Cantidad)</td>
-                            <td>@Html.DisplayFor(modelItem => item.IdVentaNavigation!.Fecha)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                            <th scope="row">@item.IdVenta</th>
+                            <td>@Html.DisplayFor(modelItem => item.Fecha))</td>
+                            <td>@Html.DisplayFor(modelItem => item.Cliente)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EstadoVenta)</td>                          
                             <td>
-                                <a asp-action="GenerarPdf" asp-route-id="@item.IdDetalleVenta" class="btn btn-success">Generar Factura</a>
+                                <a asp-action="GenerarPdf" asp-route-id="@item.IdVenta" class="btn btn-success">Generar Factura</a>
                             </td>
                         </tr>
                     }

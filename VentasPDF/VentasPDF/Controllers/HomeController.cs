@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Rotativa.AspNetCore;
 using System.Diagnostics;
-using System.Net.Http;
 using VentasPDF.Models;
 
 namespace VentasPDF.Controllers
@@ -20,35 +18,36 @@ namespace VentasPDF.Controllers
         }
 
         public IActionResult Index()
-        {
-                                    
-            var ventas = _context.DetallesVenta
-                .Include(d => d.IdVentaNavigation)
-                .Include(d => d.IdProductoNavigation)
-                .ThenInclude(p => p!.IdCategoriaNavigation)
-                .ToList();
+        {                      
+            var ventas = _context.Ventas.ToList();           
             return View(ventas);
         }
 
-        public async Task<IActionResult> GenerarPdf(int id)
+        public async Task<IActionResult> GenerarPdf(int? id)
         {
-            var detalle = await _context.DetallesVenta
-                .Include(d => d.IdVentaNavigation)
-                .Include(d => d.IdProductoNavigation)
-                .ThenInclude(p => p!.IdCategoriaNavigation)
-                .FirstOrDefaultAsync(x => x.IdDetalleVenta == id);
 
-            if(detalle == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            return new ViewAsPdf("GenerarPdf", detalle)
+
+            Venta venta = await _context.Ventas!
+                .Include(d => d.DetallesVenta)
+                .ThenInclude(s => s.IdProductoNavigation)
+                .FirstOrDefaultAsync(x => x.IdVenta == id);
+
+            if (venta == null)
             {
-                FileName = $"Venta {detalle!.IdDetalleVenta}.pdf",
+                return NotFound();
+            }
+           
+            return new ViewAsPdf("GenerarPdf", venta)
+            {
+                FileName = $"Venta {id}.pdf",
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
                 PageSize = Rotativa.AspNetCore.Options.Size.A4
-            };           
+            };
         }
 
 
