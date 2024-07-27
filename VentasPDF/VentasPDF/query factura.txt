@@ -1,0 +1,78 @@
+CREATE DATABASE Ecommerce
+
+USE Ecommerce
+
+
+CREATE TABLE Categorias(
+IdCategoria integer identity(1,1) primary key,
+Descripcion nvarchar(100) not null
+)
+
+CREATE TABLE Productos(
+IdProducto integer identity(1,1) primary key,
+Nombre nvarchar(100) not null,
+Precio decimal(18,2) not null,
+Stock integer,
+Descripcion nvarchar(255),
+IdCategoria integer,
+FOREIGN KEY (IdCategoria) REFERENCES Categorias(IdCategoria),
+)
+
+CREATE TABLE Ventas(
+IdVenta integer identity(1,1) primary key,
+Fecha datetime default getdate(),
+Cliente nvarchar(100) not null,
+EstadoVenta nvarchar(100) not null,
+)
+
+CREATE TABLE DetallesVenta(
+IdDetalleVenta integer identity(1,1) primary key,
+IdVenta integer foreign key (IdVenta) references Ventas(IdVenta),
+IdProducto integer foreign key (IdProducto) references Productos(IdProducto),
+Cantidad integer,
+)
+
+INSERT INTO Categorias (Descripcion) VALUES ('Electrónica');
+INSERT INTO Categorias (Descripcion) VALUES ('Ropa');
+INSERT INTO Categorias (Descripcion) VALUES ('Alimentos');
+INSERT INTO Categorias (Descripcion) VALUES ('Libros');
+INSERT INTO Categorias (Descripcion) VALUES ('Juguetes');
+INSERT INTO Categorias (Descripcion) VALUES ('Muebles');
+INSERT INTO Categorias (Descripcion) VALUES ('Deportes');
+INSERT INTO Categorias (Descripcion) VALUES ('Herramientas');
+INSERT INTO Categorias (Descripcion) VALUES ('Jardinería');
+INSERT INTO Categorias (Descripcion) VALUES ('Automóviles');
+
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Laptop', 1200.00, 10, 'Laptop de alta gama', 1);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Camiseta', 20.00, 50, 'Camiseta de algodón', 2);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Manzana', 1.00, 100, 'Manzana fresca', 3);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Libro de SQL', 30.00, 25, 'Libro de bases de datos SQL', 4);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Muñeca', 15.00, 40, 'Muñeca para niñas', 5);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Sofá', 300.00, 5, 'Sofá de cuero', 6);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Balón de fútbol', 25.00, 20, 'Balón oficial', 7);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Taladro', 50.00, 15, 'Taladro eléctrico', 8);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Planta', 10.00, 30, 'Planta decorativa', 9);
+INSERT INTO Productos (Nombre, Precio, Stock, Descripcion, IdCategoria) VALUES ('Aceite para motor', 40.00, 60, 'Aceite de alta calidad', 10);
+
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Juan Perez', 'Completada');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Maria Lopez', 'Pendiente');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Carlos Sanchez', 'Cancelada');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Luisa Fernandez', 'Completada');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Jose Ramirez', 'Pendiente');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Ana Gomez', 'Completada');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Pedro Martinez', 'Cancelada');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Laura Diaz', 'Pendiente');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Miguel Torres', 'Completada');
+INSERT INTO Ventas (Cliente, EstadoVenta) VALUES ('Rosa Hernandez', 'Pendiente');
+
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (1, 1, 2);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (1, 4, 2);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (2, 2, 1);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (3, 3, 5);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (4, 4, 3);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (5, 5, 4);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (6, 6, 1);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (7, 7, 2);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (8, 8, 6);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (9, 9, 3);
+INSERT INTO DetallesVenta (IdVenta, IdProducto, Cantidad) VALUES (10, 10, 7);
