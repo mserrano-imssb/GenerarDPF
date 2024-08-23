@@ -1,3 +1,6 @@
+using VentasPDF.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace VentasPDF
 {
     public class Program
@@ -8,6 +11,7 @@ namespace VentasPDF
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<EcommerceContext>(x => x.UseSqlServer("name=ConexionSQL"));
 
             var app = builder.Build();
 
@@ -29,6 +33,9 @@ namespace VentasPDF
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            IWebHostEnvironment env = app.Environment;
+            Rotativa.AspNetCore.RotativaConfiguration.Setup(env.WebRootPath, "../Rotativa/Windows");
 
             app.Run();
         }
