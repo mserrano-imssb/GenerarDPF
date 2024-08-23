@@ -40,7 +40,7 @@ namespace VentasPDF.Controllers
             if (venta == null)
             {
                 return NotFound();
-            }
+            }           
            
             return new ViewAsPdf("GenerarPdf", venta)
             {
